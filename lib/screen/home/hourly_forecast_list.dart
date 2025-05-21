@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app/screen/home/hourly_forecast_item.dart';
 
 class HourlyForecastList extends StatelessWidget {
-  const HourlyForecastList({super.key});
+  final Map<String, dynamic> dataList;
+  const HourlyForecastList({super.key, required this.dataList});
 
   @override
   Widget build(BuildContext context) {
@@ -20,36 +22,28 @@ class HourlyForecastList extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  HourlyForecastItem(
-                    time: '00:00',
-                    icon: Icons.cloud,
-                    temerature: '325 F',
-                  ),
-                  HourlyForecastItem(
-                    time: '03:00',
-                    icon: Icons.sunny,
-                    temerature: '325 F',
-                  ),
-                  HourlyForecastItem(
-                    time: '06:00',
-                    icon: Icons.cloud,
-                    temerature: '325 F',
-                  ),
-                  HourlyForecastItem(
-                    time: '09:00',
-                    icon: Icons.sunny,
-                    temerature: '325 F',
-                  ),
-                  HourlyForecastItem(
-                    time: '12:00',
-                    icon: Icons.cloud,
-                    temerature: '325 F',
-                  ),
-                ],
+            SizedBox(
+              height: 120,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 6,
+                itemBuilder: (context, index) {
+                  final hourlyForecastTime = DateTime.parse(
+                    dataList['list'][index + 1]['dt_txt'],
+                  );
+                  final hourlyForecastSky =
+                      dataList['list'][index + 1]['weather'][0]['main'];
+                  final hourlyForecastTemp =
+                      dataList['list'][index + 1]['main']['temp'];
+                  bool isCloud =
+                      hourlyForecastSky == "Clouds" ||
+                      hourlyForecastSky == "Rain";
+                  return HourlyForecastItem(
+                    time: DateFormat.j().format(hourlyForecastTime),
+                    icon: isCloud ? Icons.cloud : Icons.sunny,
+                    temerature: hourlyForecastTemp.toString(),
+                  );
+                },
               ),
             ),
           ],

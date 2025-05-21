@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class HeaderCard extends StatelessWidget {
-  const HeaderCard({super.key});
+  final double currentTemperature;
+  final String currentSky;
+
+  const HeaderCard({
+    super.key,
+    required this.currentTemperature,
+    required this.currentSky,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +25,20 @@ class HeaderCard extends StatelessWidget {
             padding: const EdgeInsets.all(32),
             child: Column(
               children: [
-                const Text(
-                  "300.25K",
+                Text(
+                  "${currentTemperature.toString()}K",
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 16),
-                Icon(Icons.cloud, size: 64),
+                Icon(
+                  currentSky == "Clouds" || currentSky == "Rain"
+                      ? Icons.cloud
+                      : Icons.sunny,
+                  size: 64,
+                ),
                 const SizedBox(height: 16),
-                const Text(
-                  "Rain",
+                Text(
+                  currentSky,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
                 ),
               ],

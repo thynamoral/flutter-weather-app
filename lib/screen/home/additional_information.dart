@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
 class AdditonalInformation extends StatelessWidget {
-  const AdditonalInformation({super.key});
+  final String humidity;
+  final String windSpeed;
+  final String pressure;
+
+  const AdditonalInformation({
+    super.key,
+    required this.humidity,
+    required this.windSpeed,
+    required this.pressure,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +35,17 @@ class AdditonalInformation extends StatelessWidget {
               AdditonalInformationItem(
                 icon: Icons.water_drop,
                 infoLabel: "Humidity",
-                value: "90",
+                value: humidity,
               ),
               AdditonalInformationItem(
                 icon: Icons.air,
                 infoLabel: "Wind Speed",
-                value: "7.5",
+                value: windSpeed,
               ),
               AdditonalInformationItem(
                 icon: Icons.beach_access,
-                infoLabel: "Humidity",
-                value: "1025",
+                infoLabel: "Pressure",
+                value: pressure,
               ),
             ],
           ),
